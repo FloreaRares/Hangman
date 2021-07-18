@@ -32,7 +32,7 @@ function correctGuess(pressedButtonId, letterCaseIndex) {
 	var button = document.getElementById(pressedButtonId);
 	button.setAttribute("disabled", "");
 	if(correctAttempts == word.length) {
-		gameWon();
+		gameEnd("win");                                              
 	}
 }
 
@@ -41,8 +41,10 @@ function incorrectGuess(pressedButtonId) {
 	document.getElementById("incorrectInput").innerHTML = parseInt(document.getElementById("incorrectInput").innerHTML) + 1;
 	var button = document.getElementById(pressedButtonId);
 	button.setAttribute("disabled", "");
-	if(incorrectAttempts == 6) {
-		gameLost();
+	if(incorrectAttempts < 6) {
+		document.getElementById("hangmanImage").src = hangmanImages[incorrectAttempts];
+	} else {
+		gameEnd("lose");                                            
 	}
 }
 
@@ -63,17 +65,20 @@ function resetGame() {
 	location.reload();
 }
 
-function gameWon() {
-	$('#outputMessage').append(`
-		<span style="font-size: 40px;"><strong>You won!</strong></span>
-	`);
-	$(':button').prop('disabled', true);
-}
-
-function gameLost() {
-	$('#outputMessage').append(`
-		<span style="font-size: 40px;"><strong>You lost!</strong></span>
-	`)
+function gameEnd(gameState) {
+	switch(gameState) {
+		case "win":
+			$('#outputMessage').append(`
+				<span style="font-size: 40px;"><strong>You won!</strong></span>
+			`);
+			break;
+		case "lose":
+			$('#outputMessage').append(`
+				<span style="font-size: 40px;"><strong>You lost!</strong></span>
+			`);
+			break;
+	}
 	$(':button').not('#resetButton').prop('disabled', true);
 }
+
 
