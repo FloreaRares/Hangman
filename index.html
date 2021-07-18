@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
+        <title>Hangman</title>
+    </head>
+    <body>
+        <div class ="container text-center">
+            <h1><strong style ="font-size: 50px;">Hangman</strong></h1><br>
+            <p id ="counter">Wrong guesses: <span id ="incorrectInput">0</span> of <span>6</span></p>
+        </div>
+
+        <div class = "text-center">
+            <img class ="rounded mx-auto d-block" id ="hangmanImage" src="Images/0.jpg">
+        </div>
+        <div class ="d-flex justify-content-center" id ="userInput" style ="padding: 14px">
+            <input type ="password" class ="text-align: center col-xs-2" placeholder ="Word to be guessed" id ="word">
+            <button type ="submit" class ="btn btn-primary btn-lg" id ="confirmWord" onClick ="userConfirms();">Confirm</button>
+        </div>
+        <div class ="col text-center" id ="keyboard">
+            <form id ="wordLetters">
+              
+            </form>                         
+        </div>
+       <div class="col text-center "id = "outputMessage">
+                   
+       </div>
+        <div class ="col text-center" id ="game-footer">
+            <button type ="submit" class ="btn btn-primary btn-lg" id ="resetButton" onClick ="resetGame();">Reset</button>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script> 
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+        <script src="main.js"></script>
+    </body>
+</html>
