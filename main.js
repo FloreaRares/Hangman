@@ -1,36 +1,25 @@
-var word, correctAttempts = 0, incorrectAttempts = 0;
-var hangmanImages = ["Images/1.jpg", "Images/2.jpg", "Images/3.jpg", "Images/4.jpg", "Images/5.jpg", "Images/6.jpg"];
+const hangmanImages = ["Images/1.jpg", "Images/2.jpg", "Images/3.jpg", "Images/4.jpg", "Images/5.jpg", "Images/6.jpg"];
+var correctAttempts = 0, incorrectAttempts = 0, word;
 
 function userConfirms() {
-	word = $('#word').val().toUpperCase();
-	var confirmButton = document.getElementById("confirmWord");
-	confirmButton.setAttribute("disabled", "");
-	generateCase(word);
-	generateKeyboard();
+	word = document.getElementById("word").value.toUpperCase();
+	document.getElementById("confirmWord").setAttribute("disabled", "");
+	generateInterface();
 }
 
-function generateCase() {
-	for(var i = 0; i < word.length; ++i) {
-		$('#wordLetters').append(`
-			<input class ="letterCase" id ="` + i + `" type ="text" maxlength="1" disabled/>
-		`);
+function generateInterface() {
+	for(let i = 0; i < word.length; ++i) {
+		document.getElementById("wordLetters").innerHTML += `<input class ="letterCase" id ="` + i + `" type ="text" maxlength="1" disabled/>`; 
 	}
-}
-
-function generateKeyboard() {
-	for(var i = 65; i <= 90; ++i) {
-		$('#keyboard').append(`
-			<button type="button" class="btn btn-secondary btn-lg" id ="` + String.fromCharCode(i) + `" onClick ="checkMatch(this.id);">` + String.fromCharCode(i) + `</button> 				   
-		`);
+	for(let i = 65; i <= 90; ++i) {
+		document.getElementById("keyboard").innerHTML += `<button type ="button" class ="btn btn-secondary btn-lg" id ="` + String.fromCharCode(i)+ `" onClick ="checkMatch(this.id);">` + String.fromCharCode(i) + `</button>`; 
 	}
 }
 
 function correctGuess(pressedButtonId, letterCaseIndex) {
 	++correctAttempts;
-	var caseMatch = document.getElementById(letterCaseIndex);
-	caseMatch.setAttribute("value", pressedButtonId);
-	var button = document.getElementById(pressedButtonId);
-	button.setAttribute("disabled", "");
+	document.getElementById(letterCaseIndex).setAttribute("value", pressedButtonId);
+	document.getElementById(pressedButtonId).setAttribute("disabled", "");
 	if(correctAttempts == word.length) {
 		gameEnd("win");                                              
 	}
@@ -39,8 +28,7 @@ function correctGuess(pressedButtonId, letterCaseIndex) {
 function incorrectGuess(pressedButtonId) {
 	++incorrectAttempts;
 	document.getElementById("incorrectInput").innerHTML = parseInt(document.getElementById("incorrectInput").innerHTML) + 1;
-	var button = document.getElementById(pressedButtonId);
-	button.setAttribute("disabled", "");
+	document.getElementById(pressedButtonId).setAttribute("disabled", "");
 	if(incorrectAttempts < 6) {
 		document.getElementById("hangmanImage").src = hangmanImages[incorrectAttempts];
 	} else {
@@ -50,7 +38,7 @@ function incorrectGuess(pressedButtonId) {
 
 function checkMatch(pressedButtonId) {
 	var match = false;
-	for(var i = 0; i < word.length; ++i) {
+	for(let i = 0; i < word.length; ++i) {
 		if(word[i] == pressedButtonId) {
 			correctGuess(pressedButtonId, i);
 			match = true;
@@ -65,20 +53,16 @@ function resetGame() {
 	location.reload();
 }
 
-function gameEnd(gameState) {
-	switch(gameState) {
-		case "win":
-			$('#outputMessage').append(`
-				<span style="font-size: 40px;"><strong>You won!</strong></span>
-			`);
-			break;
-		case "lose":
-			$('#outputMessage').append(`
-				<span style="font-size: 40px;"><strong>You lost!</strong></span>
-			`);
-			break;
+function gameEnd(gameStatus) {
+	if(gameStatus == "win") {
+		document.getElementById("outputMessage").innerHTML += '<span style="font-size: 40px;"><strong>You won!</strong></span>';
+	} else {
+		document.getElementById("outputMessage").innerHTML += '<span style="font-size: 40px;"><strong>You lost!</strong></span>';
 	}
-	$(':button').not('#resetButton').prop('disabled', true);
+	const buttons = document.querySelectorAll(".btn-secondary");
+	for(let i = 0; i < buttons.length; ++i) {
+		buttons[i].setAttribute("disabled", "");
+	}
 }
 
 
